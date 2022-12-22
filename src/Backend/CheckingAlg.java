@@ -31,4 +31,20 @@ public class CheckingAlg {
         }
         return false;
     }
+    public boolean isOctal(String n){
+        String []part=n.split("");
+        boolean res=false;
+        int i=0;
+        try{
+            Integer.parseInt(n);
+            while (i < part.length && !res) {
+                if (!(part[i].equals("8") || part[i].equals("9"))) {
+                    i++;
+                } else res = true;
+            }
+            return !res;
+        }catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

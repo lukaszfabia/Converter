@@ -3,13 +3,12 @@ package Frontend;
 import Backend.NumbersSystem;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -20,9 +19,6 @@ public class Window extends JFrame implements ActionListener {
     List<String> list = new ArrayList<>();
     JTextField insField, resField;
     JButton convert;
-    JLabel result, insert;
-    ButtonGroup box;
-    JRadioButton binDec, decBin;
     JMenuBar menuBar;
     JMenu help, file;
     JMenuItem about, save;
@@ -50,44 +46,32 @@ public class Window extends JFrame implements ActionListener {
         about.addActionListener(this);
         help.add(about);
 
+        insField = new JTextField();
+        insField.setText("insert number to convert");
+        insField.setFont(new Font("Helvetica", Font.ITALIC, 13));
+        insField.setForeground(Color.LIGHT_GRAY);
+        insField.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                insField.setText("");
+                insField.setFont(new Font("Helvetica", Font.PLAIN, 14));
+                insField.setForeground(Color.BLACK);
+            }
+        });
 
-        insert = new JLabel("Binary number: ");
-        insert.setBounds(62, 50, 200, 20);
-        insert.setFont(new Font("Futura", Font.PLAIN, 15));
-        //add(insert);
-
-        insField = new JTextField("");
-        insField.setBounds(200, 50, 200, 20);
+        insField.setBounds(200, 50, 250, 20);
         add(insField);
 
         convert = new JButton();
-        convert.setBounds(150, 200, 200, 20);
+        convert.setBounds(200, 150, 250, 20);
         convert.setText("Convert");
         convert.setFont(new Font("Futura", Font.PLAIN, 14));
         convert.addActionListener(this);
         add(convert);
 
-        result = new JLabel("Decimal number:");
-        result.setBounds(50, 100, 200, 20);
-        result.setFont(new Font("Futura", Font.PLAIN, 15));
-        //add(result);
-
         resField = new JTextField();
-        resField.setBounds(200, 100, 200, 20);
+        resField.setBounds(200, 100, 250, 20);
         add(resField);
-
-        box = new ButtonGroup();
-        binDec = new JRadioButton("Binary to decimal");
-        binDec.setBounds(100, 160, 150, 20);
-        binDec.setFont(new Font("Futura", Font.PLAIN, 14));
-        //add(binDec);
-        //box.add(binDec);
-
-        decBin = new JRadioButton("Decimal to binary");
-        decBin.setBounds(250, 160, 150, 20);
-        decBin.setFont(new Font("Futura", Font.PLAIN, 14));
-        //add(decBin);
-        //box.add(decBin);
 
         sys1 = new JComboBox<>();
         sys1.setBounds(40, 50, 150, 25);
@@ -96,7 +80,6 @@ public class Window extends JFrame implements ActionListener {
         sys1.addItem("Octal");
         sys1.addActionListener(this);
         add(sys1);
-
 
         sys2 = new JComboBox<>();
         sys2.setBounds(40, 100, 150, 25);
@@ -118,18 +101,6 @@ public class Window extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         if (source == convert) {
-            /*if (binDec.isSelected()) {
-                NumbersSystem num = new NumbersSystem();
-                decField.setText(num.binDec(binField.getText()));
-                String tmp = String.format("%-20s %-20s", binField.getText(), num.binDec(binField.getText()));
-                list.add(tmp);
-            } else if (decBin.isSelected()) {
-                NumbersSystem num = new NumbersSystem();
-                binField.setText(num.decBin(decField.getText()));
-                String tmp = String.format("%-20s %-20s", num.decBin(decField.getText()), decField.getText());
-                list.add(tmp);
-            } */
-
             String system1 = String.valueOf(sys1.getSelectedItem());
             String system2 = String.valueOf(sys2.getSelectedItem());
 
@@ -139,16 +110,16 @@ public class Window extends JFrame implements ActionListener {
                     switch (system2) {
                         case "Binary" -> {
                             resField.setText(insField.getText());
-                            //String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
                             list.add(String.format("%-20s %-20s", insField.getText(), resField.getText()));
                         }
                         case "Decimal" -> {
                             resField.setText(num.binDec(insField.getText()));
-                            String tmp = String.format("%-20s %-20s", insField.getText(), num.binDec(resField.getText()));
+                            String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
                             list.add(tmp);
                         }
                         case "Octal" -> {
-                            String tmp = String.format("%-20s %-20s", insField.getText(), num.binDec(resField.getText()));
+                            resField.setText(num.decAno(num.binDec(insField.getText()),8));
+                            String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
                             list.add(tmp);
                         }
                     }
@@ -156,16 +127,18 @@ public class Window extends JFrame implements ActionListener {
                 case "Decimal" -> {
                     switch (system2) {
                         case "Binary" -> {
-                            resField.setText(num.decBin(insField.getText()));
-                            String tmp = String.format("%-20s %-20s", insField.getText(), num.binDec(resField.getText()));
+                            resField.setText(num.decAno(insField.getText(), 2));
+                            String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
                             list.add(tmp);
                         }
                         case "Decimal" -> {
                             resField.setText(insField.getText());
-                            list.add(String.format("%-20s %-20s", insField.getText(), resField.getText()));
+                            String tmp=String.format("%-20s %-20s", insField.getText(), resField.getText());
+                            list.add(tmp);
                         }
                         case "Octal" -> {
-                            String tmp = String.format("%-20s %-20s", insField.getText(), num.binDec(resField.getText()));
+                            resField.setText(num.decAno(insField.getText(), 8));
+                            String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
                             list.add(tmp);
                         }
                     }
@@ -173,16 +146,19 @@ public class Window extends JFrame implements ActionListener {
                 case "Octal" -> {
                     switch (system2) {
                         case "Binary" -> {
-                            String tmp = String.format("%-20s %-20s", insField.getText(), num.binDec(resField.getText()));
+                            resField.setText(num.decAno(num.octDec(insField.getText()), 2));
+                            String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
                             list.add(tmp);
                         }
                         case "Decimal" -> {
-                            String tmp = String.format("%-20s %-20s", insField.getText(), num.binDec(resField.getText()));
+                            resField.setText(num.octDec(insField.getText()));
+                            String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
                             list.add(tmp);
                         }
                         case "Octal" -> {
                             resField.setText(insField.getText());
-                            list.add(String.format("%-20s %-20s", insField.getText(), resField.getText()));
+                            String tmp=String.format("%-20s %-20s", insField.getText(), resField.getText());
+                            list.add(tmp);
                         }
                     }
                 }

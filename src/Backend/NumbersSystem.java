@@ -26,24 +26,47 @@ public class NumbersSystem {
         } else return "It isn't a binary number";
     }
 
-    public String decBin(String n) {
+    public String decAno(String n, int p) {
         if (checkingAlg.isDecimal(n)) {
-            long num = Long.parseLong(n);
-            if (num == 0) {
-                return "0";
+            if (n.equals("0")) {
+                return n;
             } else {
                 StringBuilder binaryNumber = new StringBuilder();
-                long quotient = num;
+                long quotient = Long.parseLong(n);
 
                 while (quotient > 0) {
-                    long remainder = quotient % 2;
+                    long remainder = quotient % p;
                     binaryNumber.append(remainder);
-                    quotient /= 2;
+                    quotient /= p;
                 }
                 binaryNumber.reverse();
 
                 return binaryNumber.toString();
             }
         } else return "Please write a positive decimal number";
+    }
+
+    public String octDec(String n) {
+        if (checkingAlg.isOctal(n)) {
+            if (n.equals("0")) {
+                return n;
+            } else {
+                String[] part = n.split("");
+                long[] num = new long[part.length];
+                long sum = 0;
+                int i = 0;
+                while (i < num.length) {
+                    num[i] = Long.parseLong(part[i]);
+                    int m = 1;
+                    for (int j = part.length - i - 1; j > 0; j--) {
+                        m *= 8;
+                    }
+                    sum += num[i] * m;
+                    i++;
+                }
+                return String.valueOf(sum);
+            }
+
+        } else return "Please write a octal number";
     }
 }
