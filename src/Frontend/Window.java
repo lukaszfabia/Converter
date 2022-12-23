@@ -20,7 +20,7 @@ public class Window {
     private JButton convert;
     private JComboBox<String> sys1;
     private JComboBox<String> sys2;
-    private final String[] names = {"Binary", "Decimal", "Octal"};
+    private final String[] names = {"Binary", "Decimal", "Octal", "Hexal"};
     private JPanel panel;
     private Color defultColor;
     private JFrame frame;
@@ -155,6 +155,11 @@ public class Window {
                             }
                             case "Octal" -> {
                                 resField.setText(num.decAno(insField.getText(), 8));
+                                String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
+                                list.add(tmp);
+                            }
+                            case "Hexal" -> {
+                                resField.setText(num.decAno(insField.getText(), 16));
                                 String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
                                 list.add(tmp);
                             }
