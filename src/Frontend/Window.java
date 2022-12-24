@@ -139,6 +139,12 @@ public class Window {
                                 String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
                                 list.add(tmp);
                             }
+                            case "Hexal" -> {
+                                resField.setText(num.decAno(num.binDec(insField.getText()),16));
+                                String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
+                                list.add(tmp);
+                            }
+
                         }
                     }
                     case "Decimal" -> {
@@ -179,6 +185,35 @@ public class Window {
                             }
                             case "Octal" -> {
                                 resField.setText(insField.getText());
+                                String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
+                                list.add(tmp);
+                            }
+                            case "Hexal" -> {
+                                resField.setText(num.decAno(num.octDec(insField.getText()),16));
+                                String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
+                                list.add(tmp);
+                            }
+                        }
+                    }
+                    case "Hexal" ->{
+                        switch (system2){
+                            case "Binary" -> {
+                                resField.setText(num.decAno(num.hexDec(insField.getText()),2));
+                                String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
+                                list.add(tmp);
+                            }
+                            case "Decimal" -> {
+                                resField.setText(num.hexDec(insField.getText()));
+                                String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
+                                list.add(tmp);
+                            }
+                            case "Octal" -> {
+                                resField.setText(num.decAno(num.hexDec(insField.getText()),8));
+                                String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
+                                list.add(tmp);
+                            }
+                            case "Hexal" -> {
+                                resField.setText(insField.getText().toUpperCase());
                                 String tmp = String.format("%-20s %-20s", insField.getText(), resField.getText());
                                 list.add(tmp);
                             }

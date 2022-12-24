@@ -72,36 +72,43 @@ public class NumbersSystem {
         } else return "Please write a positive decimal number";
     }
 
-    public String hexBin(String n) {
-        if (checkingAlg.isHex(n)) {
-            String[] part1 = n.split("");
-            String []part = new String[part1.length];
-            StringBuilder bin = new StringBuilder();
-            for (int i = 0; i < part.length; i++) {
-                part[i]=part1[i].toUpperCase();
-                try{
-                    if (Long.parseLong(part[i])<8)
-                    {
-                        bin.append('0').append(decAno(part[i], 2));
-                    }
-                    else{
-                        bin.append(decAno(part[i], 2));
-                    }
-                }catch (NumberFormatException e)
-                {
-                    switch (part[i]) {
-                        case "A" -> bin.append(decAno("10", 2));
-                        case "B" -> bin.append(decAno("11", 2));
-                        case "C" -> bin.append(decAno("12", 2));
-                        case "D" -> bin.append(decAno("13", 2));
-                        case "E" -> bin.append(decAno("14", 2));
-                        case "F" -> bin.append(decAno("15", 2));
-                    }
-                }
+    public String hexDec(String n) {
+        if (checkingAlg.isHex(n))
+        {
+            if (n.equals("0"))
+            {
+                return n;
             }
-            return bin.toString();
-        } else {
-            return "Please write a hexal number";
+            else{
+                String[] part1 = n.split("");
+                String[] part=new String[part1.length];
+                char []array= new char[part.length];
+                long []ascii=new long[part.length];
+                int i=0;
+                int sum=0;
+                while (i< part.length){
+                    part[i]=part1[i].toUpperCase();
+                    array[i]=part[i].charAt(0);
+                    ascii[i]= array[i];
+                    if(ascii[i]>47 && ascii[i]<58) {
+                        int m = 1;
+                        for (int j = part.length - i - 1; j > 0; j--) {
+                            m *= 16;
+                        }
+                        sum += Long.parseLong(part[i]) * m;
+                    }
+                    if (ascii[i]>64 && ascii[i]<71){
+                        int m = 1;
+                        for (int j = part.length - i - 1; j > 0; j--) {
+                            m *= 16;
+                        }
+                        sum += (long)(array[i]-55) * m;
+                    }
+                    i++;
+                }
+                return String.valueOf(sum);
+            }
         }
+        return "Write a hexal number";
     }
 }
