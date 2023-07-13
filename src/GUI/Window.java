@@ -96,6 +96,7 @@ public class Window {
         ImageIcon image = new ImageIcon("icon.png");
         frame = new JFrame("Numbers system calculator");
         frame.setSize(500, 350);
+        frame.setResizable(false);
         frame.setIconImage(image.getImage());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
