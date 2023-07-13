@@ -1,6 +1,6 @@
-package Frontend;
+package GUI;
 
-import Backend.NumbersSystem;
+import NumberSystemsAlgorithms.NumbersSystem;
 
 import javax.swing.*;
 import java.awt.*;

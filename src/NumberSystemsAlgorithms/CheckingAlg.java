@@ -1,4 +1,4 @@
-package Backend;
+package NumberSystemsAlgorithms;
 
 public class CheckingAlg {
     public CheckingAlg() {
